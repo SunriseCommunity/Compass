@@ -1,0 +1,300 @@
+---
+sidebar_position: 2
+---
+
+# Installation
+
+This section will help you set up Sunrise server on your local environment.
+
+:::note
+We are not happy about how split current installation process is, and we are working on making it more streamlined.  
+(Having a single docker image that contains everything, or a single script that sets up everything.)
+
+For now, you will have to follow multiple steps to get everything up and running. Sorry about that!
+:::
+
+We are going to set up "Production" ready environment, which means we will use Docker to run the server and other components.
+
+If you are more interested in development setup, please refer to the [Contributing](../contributing) section.
+
+## Prerequisites
+
+Before you start, make sure you have the following installed on your machine:
+
+- [Docker](https://www.docker.com/): For running the server and other components.
+- [Git](https://git-scm.com/): For cloning the repositories.
+- [Database Viewer](https://dbeaver.io/): For managing server database.
+  You can use any database viewer you like, but we recommend DBeaver for its ease of use.
+
+  It will be used to give you initial administration privileges to your account. After which everything can be handled in the chat/web interface.
+
+- [Text Editor](https://code.visualstudio.com/): Optional, but recommended. But you can use any text editor you like.
+
+Docker will do the heavy lifting for you, so you don't need to worry about installing any technologies like Redis, MySQL, Grafana, etc.
+
+# Getting Started
+
+## Cloning the Repositories
+
+First, we need to clone the repositories of the components we will be using.
+Open your terminal and run the following commands:
+
+```bash
+git clone https://github.com/SunriseCommunity/Sunrise
+```
+
+```bash
+git clone https://github.com/SunriseCommunity/Observatory
+```
+
+(Optional) If you want to use the web interface, you can also clone the Sunset repository:
+
+```bash
+git clone https://github.com/SunriseCommunity/Sunset
+```
+
+## Update `hosts` File
+
+To access the server using an internal domain, we need to update the `hosts` file on your machine.
+
+On Windows, you can find the `hosts` file at `C:\Windows\System32\drivers\etc\hosts`.  
+On Linux, you can find it at `/etc/hosts`.
+
+Add the following line to the `hosts` file:
+
+```md
+... (rest of the file)
+
+# Sunrise Web Section
+
+127.0.0.1 sunrise.local
+127.0.0.1 api.sunrise.local
+
+# Sunrise osu! Section
+
+127.0.0.1 osu.sunrise.local
+127.0.0.1 a.sunrise.local
+127.0.0.1 c.sunrise.local
+127.0.0.1 assets.sunrise.local
+127.0.0.1 cho.sunrise.local
+127.0.0.1 assets.sunrise.local
+127.0.0.1 c4.sunrise.local
+127.0.0.1 b.sunrise.local
+```
+
+:::warning
+Don't forget to save the file after editing it.
+:::
+
+## Creating Self-Signed Certificates
+
+### Using online generator (recommended)
+
+You can use an online generator to create self-signed certificates.
+We recommend using [Devglan's Self-Signed Certificate Generator](https://www.devglan.com/online-tools/generate-self-signed-cert) with the following settings:
+
+- **Common Name (CN)**: `sunrise.local`
+- **Email**: `sunrise@mail.com`
+- **Validity**: `3650` (10 years)
+- **Signing Algorithm**: `SHA256`
+- **Key Size**: `4096 bit`
+
+![Online Config](/img/ssl-online.png)
+
+After generating the certificate, click "Download All" button to download the certificate and private key.
+
+Now, generate a PKCS12 file (PFX) from the downloaded files using any online converter or using OpenSSL.
+
+We will use [SSL Trust PFX File Generator](https://www.ssltrust.com.au/ssl-tools/pfx-file-generator) for this.
+
+Upload the downloaded certificate (`certificate.cer`) and private key file (`privateKey.key`) and click "Create / Download PFX File" button.
+
+This will generate a PFX file `certificate.pfx`, rename it to `sunrise.pfx` and move it to the `/Sunrise` directory.
+
+```bash title="Final Directory Structure"
+Sunrise/
+...
+├── sunrise.pfx
+...
+Observatory/
+Sunset/
+```
+
+After which, you can double-click on the `certificate.cer` file to install it to the Trusted Root Certification Authorities store, or run the following command in the terminal:
+
+```bash
+certutil -addstore -f "ROOT" certificate.cer
+```
+
+### Using OpenSSL (advanced)
+
+If you prefer to use OpenSSL, you can create self-signed certificates using the following commands.
+
+Generate a self-signed certificate for the domain sunrise.local by running the following commands in the terminal:
+
+```bash
+openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout sunrise.local.key -out sunrise.local.crt -subj "/CN=sunrise.local" -addext "subjectAltName=DNS:sunrise.local,DNS:*.sunrise.local,IP:10.0.0.1"
+```
+
+Convert the certificate to the PKCS12 format (for ASP.Net) by running the following command in the terminal:
+
+```bash
+openssl pkcs12 -export -out sunrise.pfx -inkey sunrise.local.key -in sunrise.local.crt -password pass:password
+```
+
+Move the generated `sunrise.pfx` file to the `/Sunrise` directory.
+
+```bash title="Final Directory Structure"
+Sunrise/
+...
+├── sunrise.pfx
+...
+Observatory/
+Sunset/
+```
+
+Import the certificate to the Trusted Root Certification Authorities store by running the following command in the terminal:
+
+```bash
+certutil -addstore -f "ROOT" sunrise.local.crt
+```
+
+## Configuring Sunrise
+
+Now that we have the certificate, we need to configure the Sunrise server to use it.
+
+Create the file `Sunrise.Server/appsettings.Production.json` and fill it following the `Sunrise.Server/appsettings.Production.json.example` example file.
+
+Set up the beatmap manager by following the instructions in the section below.
+
+:::note How to set up Observatory?
+
+Create a `.env` file as a copy of the `.env.example` file in the `/Observatory` directory.
+
+Optionally, fill `BANCHO_CLIENT_ID` and `BANCHO_CLIENT_SECRET` with your own values, which you can get from the [osu! website](https://osu.ppy.sh/home/account/edit).
+
+Fill `IGNORE_RATELIMIT_KEY` with any string you like, it will be used to bypass the rate limit for the Sunrise server.
+
+Your `.env` file should look like this:
+
+```env
+...
+
+PORT=3333 # Make sure this port is not used by any other service and will match the `ObservatoryUrl` in the Sunrise configuration.
+
+BANCHO_CLIENT_ID=your_client_id
+BANCHO_CLIENT_SECRET=your_client_secret
+
+IGNORE_RATELIMIT_KEY=your_ignore_ratelimit_key_for_observatory
+
+...
+```
+
+After that, you can run the Observatory using Docker:
+
+```bash
+docker compose -f docker-compose.yml up -d
+```
+
+You can check `http://localhost:3333` to see if the Observatory is running.
+
+:::
+
+After setting up the beatmap manager, update the `Sunrise.Server/appsettings.Production.json` file as the following:
+
+```json
+{
+  "General": {
+    "WelcomeMessage": "You can update this message to anything you like!", // This is the message that will be displayed to players when they connect to the server.
+    "WebDomain": "your-server-domain.com", // This should be your online domain if you are planning to host the server online.
+    "IgnoreBeatmapRanking": false, // Treats all beatmaps as ranked, regardless of their actual status.
+    ...
+    "UseCustomBackgrounds": true, // If true, the server will use custom backgrounds for the main menu. You can place them in the `Data/SeasonalBackgrounds/` directory.
+    ...
+    "ObservatoryApiKey": "your_ignore_ratelimit_key_for_observatory", // This should match the `IGNORE_RATELIMIT_KEY` in the Observatory `.env` file.
+    "ObservatoryUrl": "host.docker.internal:3333", // This should match the `PORT` in the Observatory `.env` file.
+    ...
+    "CountryChangeCooldownInDays": 90, // The cooldown for changing the country of a player. Set to 0 to disable.
+  },
+  "BeatmapHype": {
+    "UserHypesWeekly": 10, // The number of hypes a user will get every week. (will not get above this limit)
+    "HypesToStartHypeTrain": 2, // The number of hypes required to start a hype train.
+    "AllowMultipleHypeFromSameUser": false // If true, users can hype the same beatmap multiple times.
+  },
+  ...
+  "Bot": {
+    "Username": "Sunshine Bot", // The username of the bot that will be used to interact with the server.
+    "Prefix": "!" // The prefix that will be used to interact with the bot.
+  },
+  ...
+  "API": {
+    ...
+    "TokenSecret": "ReplaceMeWithSomething" // This is the secret used to sign the API tokens. Make sure to change it to something unique.
+  }
+}
+```
+
+## Running the Server
+
+Now that we have everything set up, we can run the server.
+
+You can run the server using Docker by running the following command in the terminal:
+
+```bash
+docker compose -f docker-compose.yml up -d
+```
+
+This will start the server and all the components in detached mode.
+
+:::tip
+Your final docker setup should look like this:
+
+![](/img/docker.png)
+:::
+
+After which you should be able to test connection to the server using `https://cho.sunrise.local` url in your browser. You should see the face of a beatuful mister.
+
+## Accessing the Server
+
+### osu! Client
+
+Add a launch argument `-devserver sunrise.local` to your osu! shortcut.
+
+After that, you can launch the osu! client and should be able to connect to the server.
+
+### Web Interface
+
+If you have cloned the Sunset repository, we will briefly cover how to run it.
+
+First, make sure you have created the `.env.local` file as a copy of the `.env.local.example` file in the `/Sunset` directory and filled it with your values.
+
+:::warning
+Make sure to set the `NEXT_PUBLIC_SERVER_DOMAIN` to `sunrise.local` to match the server domain you set in the Sunrise configuration.
+And don't forget to add `NODE_TLS_REJECT_UNAUTHORIZED=0` to disable SSL verification for the local development environment.
+:::
+
+Then, you can run the Sunset web interface using Docker by running the following command in the terminal:
+
+```bash
+docker compose -f docker-compose.yml up -d
+```
+
+After which you should be able to access the web interface at `http://localhost:3090`.
+
+:::note
+It is known that user avatars are not displayed correctly with a local setup. Be advised.
+:::
+
+## Something went wrong?
+
+If you encounter any issues during the setup process, please check the following:
+
+- Make sure you have followed all the steps correctly.
+- Check the logs of the Docker containers for any errors.
+- If you are still having issues, feel free to open an issue on the [Sunrise repository](https://github.com/SunriseCommunity/Sunrise/issues) or ask for help in the [Sunrise Discord server](https://discord.gg/BjV7c9VRfn).
+
+# What's next?
+
+Now that you have the server up and running, you can start exploring its features and capabilities.
+
+If you would like to give you admin privileges to your account, or generally want to know how to manage the server, check out the [Configuration](../configuration) section.

@@ -1,0 +1,78 @@
+---
+sidebar_position: 3
+---
+
+# Configuration
+
+This section will cover basic usage of admin panel (Sunset) and in depth configuration of the server.
+
+## Update your own privileges
+
+Before we can access the admin panel, we need to update our own privileges. This is currently done by updating server's database directly.
+
+For the sake of simplicity, we will use the [DBeaver](https://dbeaver.io/) database management tool, but you can use any other tool that supports MySQL databases.
+
+1. Open DBeaver.
+2. Connect to your database following the instructions below
+   - **Host**: `localhost`
+   - **Port**: `3306` (use `3308` for development builds)
+   - **Database**: `sunrise`
+   - **Username**: `root`
+   - **Password**: `root`
+3. Open the `Database/sunrise/user` table.
+4. Find your user in the list, and double-click on it's `Privilege` value.
+5. Update it using the following table:
+   :::note title="Privilege Levels and how to calculate them"
+   To calculate the privilege level, you should sum the values of the privileges you want to grant.
+
+Current privileges are:
+
+- `0` - User
+- `1` - Supporter
+- `2` - Bat (Beatmap Approval Team)
+- `8` - Administrator
+- `16` - Developer
+
+For example, if you want to grant Bat and Administrator privileges, you would sum `2` (Bat) and `8` (Administrator), resulting in `10`.
+:::
+
+6. Click on the `Apply cell changes` button (or press `Ctrl + S`).
+7. Changes will be applied during a minute or so, and you will be able to access the admin panel.
+
+## Admin Panel (Sunset)
+
+The admin panel is a web interface that allows you to manage your server, view player statistics, and perform various administrative tasks.
+
+Currently it's mostly used for beatmap management, but in the future it will be expanded to include more features.
+
+### Accessing the Admin Panel
+
+To access the admin panel, open your web browser and navigate to your web interface URL, which is usually `https://localhost:3000` or `https://your-domain.com`.
+
+Login as your administrator user, which you created in the previous step.
+
+Click on your profile icon in the top right corner, and select `Admin panel` from the dropdown menu.
+
+![Admin Panel](/img/admin-button.png)
+
+And from here you can update beatmaps and view player statistics.
+
+### Beatmap Management
+
+You can open any beatmap by clicking on its name in the list. This will open a page with detailed information about the beatmap, including its metadata, difficulty, and more.
+
+![Beatmap Management](/img/beatmap-ranking.png)
+
+:::note
+You will need `Bat` privileges to manage beatmaps.
+:::
+
+You can select multiple beatmaps and update their status in bulk. This is useful for approving or rejecting multiple beatmaps at once. Furthermore, you can also return their original status by clicking the arrow button next to the status dropdown.
+
+You will also from time to time (depending on the server load) will get beatmap requests from players. You can view them in the `Beatmap requests` tab.
+
+## Chat bot commands (Deprecated)
+
+The chat bot commands are currently deprecated and will be removed in the future. They were used to manage the server and perform various administrative tasks, but will be replaced with a more user-friendly interface in the admin panel in the future.
+
+You can view the list of available commands by typing `!help` in the PM of `Sunshine Bot`.

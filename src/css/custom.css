@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ifm-global-radius: 4px;
+  --ifm-alert-border-left-width: 4px;
+  --ifm-font-family-base: Barlow, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  --ifm-font-family-monospace: Icon Mono, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  --ifm-pre-line-height: 1.6;
+
+  --ifm-h3-font-size: 1.5rem;
+}
+
+html[data-theme="dark"] {
+  --ifm-color-primary: #ff8400;
+  --ifm-color-primary-dark: #e67700;
+  --ifm-color-primary-darker: #d97000;
+  --ifm-color-primary-darkest: #b35c00;
+  --ifm-color-primary-light: #ff901a;
+  --ifm-color-primary-lighter: #ff9626;
+  --ifm-color-primary-lightest: #ffa94d;
+  --ifm-background-color: #181818;
+
+  --ifm-background-surface-color: #1a1a1a;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-navbar-background-color: rgba(36, 36, 36, 0.7);
+  --ifm-code-background: var(--ifm-background-surface-color);
+  --ifm-code-hover-background: #141414;
+
+  --ifm-color-emphasis-300: rgba(84, 84, 84, 0.48);
+  --ifm-toc-border-color: var(--ifm-color-emphasis-300);
+
+  --ifm-code-selection-color: #2b332f;
+  --ifm-code-active-color: rgba(255, 255, 255, 0.04);
+}

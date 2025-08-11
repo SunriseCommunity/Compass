@@ -1,0 +1,168 @@
+---
+sidebar_position: 4
+---
+
+# Frequently Asked Questions
+
+This section will cover some of the most common questions about Sunrise, its features, and some troubleshooting tips.
+
+## How do I set up the server?
+
+You can find the setup guide in the [Installation](./installation) section of the documentation. It covers everything from prerequisites to running the server.
+
+## How do I contribute to the project?
+
+You can find the contribution guidelines in the [Contributing](./contributing) section of the documentation.
+
+## How do I report a bug or request a feature?
+
+You can report bugs or request features by creating an issue on the related GitHub repository or using the [Discord server](https://discord.gg/BjV7c9VRfn).
+
+## How can I reset the server?
+
+Just remove all tables from the database, remove `Data` directory with a copy of `Data.Tests`, and run the server again. It will recreate all tables and populate them with default data.
+
+## I did changes to the database, but they don't apply!
+
+You likely have a cache issue. The server caches some data to improve performance, so if you make changes directly to the database, they might not be reflected immediately.
+
+Use `!flushcache` chat command to flush the cache. This will force the server to fetch the data from the database.
+
+## Can I use Akatsuki PP system?
+
+**No.** The server uses its own PP system, which is based on the original osu! PP system. It is designed to be compatible with the original osu! client and provides a consistent experience across different servers.
+
+## Can I use bancho.py frontends + Sunrise? Can I use bancho.py server + Sunset?
+
+**No.** The server is designed to work with its own frontends and backends. The API is not compatible with bancho.py, and the server does not support bancho.py frontends.
+
+## Can I use the server without Docker?
+
+Yes, it was even done before by some users, but it's not recommended purely because of the complexity of the setup and the need to manage dependencies manually.
+
+## Can I rollback to pre CSR (Combo Scale Removal) PP system?
+
+Not recommended, but we heard that some users succeeded by downgrading `rosu-pp-js` to a major version before 3.0.0.
+
+```bash title="In the Observatory directory"
+bun add rosu-pp-js@^2 # You need to have bun installed
+
+docker compose -f docker-compose.yml up -d --build --force-recreate
+```
+
+## Where can I get `BANCHO_CLIENT_ID` and `BANCHO_CLIENT_SECRET`?
+
+You can get `BANCHO_CLIENT_ID` and `BANCHO_CLIENT_SECRET` by registering your application on the [osu! API](https://osu.ppy.sh/home/account/edit).
+
+![1](/img/bancho-1.png)
+
+![2](/img/bancho-2.png)
+
+![3](/img/bancho-3.png)
+
+You can fill in the `Application Callback URLs` field with any value, as it is not used by the server.
+
+## How can I recalculate users PP?
+
+It's generally not recommended to recalculate users PP frequently, but is recommended to do it after you update the server or to keep up with the bancho's beatmaps changes.
+
+You can do it by running the following command from the admin account to the server's bot:
+
+```bash title="In the game chat. Please wait for the command to finish before sending another one."
+!recalculatescores all 0 false
+!recalculateusergrades all false
+!recalculateuserstats all false
+```
+
+This will recalculate all users scores, grades and stats. It may take a while, depending on the number of users and scores in the database.
+
+You can change all `false` values to `true` to set the server in the maintenance mode, which will prevent users from playing while the recalculation is in progress.
+
+## How can I check bot's commands?
+
+You can check the bot's commands by running the following command in the game chat:
+
+```bash title="In the game chat"
+!help
+```
+
+## Do I need to update hosts file or/and certificate if I would like to use not local domain?
+
+No, you don't need to update the hosts file or the certificate if you want to use a different domain.
+
+Just make sure you are using a reverse proxy (like Nginx or Caddy) to forward requests to the server, and make it use the correct certificate and domain instead.
+
+:::note
+With the current setup, you may need to change the `Sunrise` port from `443` to any other port (example: `8443`), as the reverse proxy will try to bind to port `443` by default.
+
+You can do it by changing the `ports` value in the `Sunrise/docker-compose.yml` file.
+
+```yml
+name: osu-sunrise
+services:
+  sunrise:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8443:443"
+      ...
+```
+
+Following with the rebuild command:
+
+```bash
+docker compose -f docker-compose.yml up -d --build --force-recreate
+```
+
+:::
+
+## I get errors about sending requests a little too fast in the game, what should I do?
+
+Firstly, make sure you are set up the same `IGNORE_RATELIMIT_KEY` (Observatory) and `ObservatoryApiKey` (Sunrise) in their configuration files.
+
+If you are still getting errors, you can try to update values in `API.RateLimit` section of the sunrise config file as follows:
+
+```json
+{
+   ...
+   "API": {
+      "RateLimit": {
+         "CallsPerWindow": 60, -> Number of calls allowed per window, the higher the number, the more requests user can send.
+         "Window": 30 -> After which time in seconds the rate limit resets. The lower the value, the more often the rate limit resets.
+      },
+   }
+}
+```
+
+:::warning
+Be careful with increasing these values, as it can lead to server overload and performance issues.
+
+This **can** lead to your server being restricted or even banned by osu! or beatmap mirrors, so update these values at your own risk.
+:::
+
+## How do I update the server?
+
+To update the server, you can follow these steps for all components you wish to update:
+
+1. Stop the server if it's running.
+2. Pull the latest changes from the GitHub repository.
+
+```bash
+git fetch
+git pull
+```
+
+3. Rebuild the server using the docker compose command:
+
+```bash
+docker compose -f docker-compose.yml up -d --build --force-recreate
+```
+
+This should update all components to the latest version.
+
+# More Questions?
+
+If you have more questions, feel free to ask in our [Discord server](https://discord.gg/BjV7c9VRfn).
+
+We will keep this section updated with the most common questions and answers, so feel free to suggest any questions you think should be answered here.
