@@ -7,16 +7,16 @@ import tailwindPlugin from "./plugins/tailwind-config.cjs";
 
 const config: Config = {
   title: "Sunrise Documentation",
-  tagline: "Dinosaurs are cool",
+  tagline: "This is the documentation for the Sunrise osu! server",
   favicon: "img/favicon.ico",
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: false, // Improve compatibility with the upcoming Docusaurus v4
   },
 
   // Set the production url of your site here
-  url: "https://your-docusaurus-site.example.com",
+  url: "https://docs.sunrize.uk",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -43,14 +43,6 @@ const config: Config = {
 
   markdown: {
     mermaid: true,
-  },
-
-  customFields: {
-    discordApi:
-      "https://discord.com/api/guilds/1071029581009657896/widget.json",
-    discordUrl: "https://chat.motioncanvas.io",
-    githubApi: "https://api.github.com/repos/motion-canvas/motion-canvas",
-    githubUrl: "https://github.com/motion-canvas/motion-canvas",
   },
 
   presets: [
@@ -88,7 +80,7 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: "img/frontpage.png",
+    image: "img/social.png",
     navbar: {
       title: "Sunrise - osu! Server",
       logo: {
