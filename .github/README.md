@@ -1,7 +1,7 @@
 # 🧭 Compass - Documentation for Sunrise osu! server
 
 <p align="center">
-  <img src="./readme.jpg" alt="Artwork made by cafetakki_uma. We don't own the rights to this image.">
+  <img src="./readme.png" alt="Artwork made by cafetakki_uma. We don't own the rights to this image.">
 </p>
 
 ### Overview
