@@ -1,0 +1,10 @@
+services:
+  compass-docs-docusaurus:
+    build:
+      context: .
+      target: serve
+    ports:
+      - "3099:3000"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
