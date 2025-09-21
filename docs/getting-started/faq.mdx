@@ -50,6 +50,22 @@ bun add rosu-pp-js@^2 # You need to have bun installed
 docker compose -f docker-compose.yml up -d --build --force-recreate
 ```
 
+## How to disable override of performance points for new scores with better score, but worse performance points?
+You can disable it by setting `UseNewPerformanceCalculationAlgorithm` to `true` in the `General` section of the sunrise config file as follows:
+
+```json
+{
+   ...
+   "General": {
+      "UseNewPerformanceCalculationAlgorithm": false,
+      ...
+   },
+   ...
+}
+```
+
+Don't forget to restart the server and recalculate user stats with `!recalculateuserstats all false` command.
+
 ## Where can I get `BANCHO_CLIENT_ID` and `BANCHO_CLIENT_SECRET`?
 
 You can get `BANCHO_CLIENT_ID` and `BANCHO_CLIENT_SECRET` by registering your application on the [osu! API](https://osu.ppy.sh/home/account/edit).
