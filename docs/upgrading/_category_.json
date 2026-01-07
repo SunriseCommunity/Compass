@@ -1,0 +1,8 @@
+{
+  "label": "Upgrading",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "This section provides information and guidance on upgrading Sunrise to the newer major/minor versions."
+  }
+}
