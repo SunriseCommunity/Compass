@@ -212,8 +212,8 @@ Usually, the username is `admin` and the database name is `observatory`.
 
 Then run the following commands to apply the backup (in order):
 ```console
-$ docker exec -i <container_id> psql -U <username> -d <database_name> -c "DROP DATABASE IF EXISTS <database_name>;"
-$ docker exec -i <container_id> psql -U <username> -d <database_name> -c "CREATE DATABASE <database_name>;"
+$ docker exec -i <container_id> psql -U <username> -d postgres -c "DROP DATABASE IF EXISTS <database_name>;"
+$ docker exec -i <container_id> psql -U <username> -d postgres -c "CREATE DATABASE <database_name>;"
 $ cat dump_observatory_postgres.sql | docker exec -i <container_id> psql -U <username> -d <database_name>
 ```
 
