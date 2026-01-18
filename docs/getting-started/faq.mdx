@@ -16,11 +16,11 @@ You can find the contribution guidelines in the [Contributing](../contributing) 
 
 ## How do I report a bug or request a feature?
 
-You can report bugs or request features by creating an issue on the related GitHub repository or using the [Discord server](https://discord.gg/BjV7c9VRfn).
+You can report bugs or request features by creating an issue on the related [GitHub repository](https://github.com/SunriseCommunity) or using the [Discord server](https://discord.gg/BjV7c9VRfn).
 
 ## How can I reset the server?
 
-Just remove all tables from the database, remove `Data` directory with a copy of `Data.Tests`, and run the server again. It will recreate all tables and populate them with default data.
+Just remove all tables from the database, replace `Data` directory with a copy of `Data.Tests`, and run the server again. It will recreate all tables and populate them with default data.
 
 ## I did changes to the database, but they don't apply!
 
@@ -42,13 +42,17 @@ Yes, it was even done before by some users, but it's not recommended purely beca
 
 ## Can I rollback to pre CSR (Combo Scale Removal) PP system?
 
-Not recommended, but we heard that some users succeeded by downgrading `rosu-pp-js` to a major version before 3.0.0.
+Not recommended, but we have git branch with the old PP system, you can use it by checking out to the branch and building the server manually.
 
-```bash title="In the Observatory directory"
-bun add rosu-pp-js@^2 # You need to have bun installed
-
-docker compose -f docker-compose.yml up -d --build --force-recreate
+```bash
+git checkout version/support-rosu-pp-js-2
 ```
+
+:::warning
+This branch is not maintained and is not recommended to use in production. Things might break, and we don't guarantee compatibility with the latest changes.
+:::
+
+Don't forget to rebuild the stack after this change.
 
 ## How to disable override of performance points for new scores with better score, but worse performance points?
 You can disable it by setting `UseNewPerformanceCalculationAlgorithm` to `true` in the `General` section of the sunrise config file as follows:
@@ -80,9 +84,9 @@ You can fill in the `Application Callback URLs` field with any value, as it is n
 
 ## How can I recalculate users PP?
 
-It's generally not recommended to recalculate users PP frequently, but is recommended to do it after you update the server or to keep up with the bancho's beatmaps changes.
+It's generally not recommended to recalculate users PP frequently, but is recommended to do it after you was asked to in the changelog/release notes.
 
-You can do it by running the following command from the admin account to the server's bot:
+You can do it by running the following command from the superuser account to the server's bot[^1]:
 
 ```bash title="In the game chat. Please wait for the command to finish before sending another one."
 !recalculatescores all 0 false
@@ -94,48 +98,23 @@ This will recalculate all users scores, grades and stats. It may take a while, d
 
 You can change all `false` values to `true` to set the server in the maintenance mode, which will prevent users from playing while the recalculation is in progress.
 
-## How can I check bot's commands?
+## How can I check server bot's[^1] commands?
 
-You can check the bot's commands by running the following command in the game chat:
+You can check the server bot's[^1] commands by running the following command in the game chat:
 
 ```bash title="In the game chat"
 !help
 ```
 
-## Do I need to update hosts file or/and certificate if I would like to use not local domain?
-
-No, you don't need to update the hosts file or the certificate if you want to use a different domain.
-
-Just make sure you are using a reverse proxy (like Nginx or Caddy) to forward requests to the server, and make it use the correct certificate and domain instead.
-
-:::note
-With the current setup, you may need to change the `Sunrise` port from `443` to any other port (example: `8443`), as the reverse proxy will try to bind to port `443` by default.
-
-You can do it by changing the `ports` value in the `Sunrise/docker-compose.yml` file.
-
-```yml
-name: osu-sunrise
-services:
-  sunrise:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8443:443"
-      ...
-```
-
-Following with the rebuild command:
-
-```bash
-docker compose -f docker-compose.yml up -d --build --force-recreate
-```
-
-:::
-
 ## I get errors about sending requests a little too fast in the game, what should I do?
 
-Firstly, make sure you are set up the same `IGNORE_RATELIMIT_KEY` (Observatory) and `ObservatoryApiKey` (Sunrise) in their configuration files.
+Firstly, make sure you are set up the same `IGNORE_RATELIMIT_KEY` (Observatory) and `ObservatoryApiKey` (Sunrise) if you are not using Solar System orchestrator.
+
+If you are using Solar System orchestrator, make sure you have `OBSERVATORY_IGNORE_RATELIMIT_KEY` value set up in the `.env` file.
+
+```env
+OBSERVATORY_IGNORE_RATELIMIT_KEY=your_ignore_ratelimit_key_for_observatory 
+```
 
 If you are still getting errors, you can try to update values in `API.RateLimit` section of the sunrise config file as follows:
 
@@ -159,6 +138,14 @@ This **can** lead to your server being restricted or even banned by osu! or beat
 
 ## How do I update the server?
 
+### Solar System Orchestrator method
+
+To update the server, just run `./update.sh` script in the `Solar-System` directory.
+
+This will update all components to the latest version.
+
+### Manual method
+
 To update the server, you can follow these steps for all components you wish to update:
 
 1. Stop the server if it's running.
@@ -169,7 +156,7 @@ git fetch
 git pull
 ```
 
-3. Rebuild the server using the docker compose command:
+3. Rebuild the component using the docker compose command:
 
 ```bash
 docker compose -f docker-compose.yml up -d --build --force-recreate
@@ -182,3 +169,5 @@ This should update all components to the latest version.
 If you have more questions, feel free to ask in our [Discord server](https://discord.gg/BjV7c9VRfn).
 
 We will keep this section updated with the most common questions and answers, so feel free to suggest any questions you think should be answered here.
+
+[^1]: Server Bot is the always online bot account that is used to interact with the server. Similar to the [`Tillerino`](https://osu.ppy.sh/users/2070907) on Bancho. Please don't confuse it with the `BanchoBot`.
