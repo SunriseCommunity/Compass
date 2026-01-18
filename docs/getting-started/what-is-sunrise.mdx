@@ -24,6 +24,10 @@ It was originally created by <GithubUser username="ohaui" />, and later picked u
 
 "Sunrise" is not just a server; it's an ecosystem. It includes:
 
+:::info
+Sunrise is designed to be used with [Solar System Orchestrator](https://github.com/SunriseCommunity/Solar-System).
+:::
+
 - **[Sunrise](https://github.com/SunriseCommunity/Sunrise)**: The core server that handles game logic, player connections, and more. Pretty much the "brain" of the operation.
 - **[Sunset](https://github.com/SunriseCommunity/Sunset)**: The face of the server. You can view it [here](https://sunrize.uk/). It provides a web interface for players to interact with the server, view their stats, and more.
 - **[Observatory](https://github.com/SunriseCommunity/Observatory)**: Lightweight beatmap manager. It allows us to parse multiple beatmap mirrors and provides a way to manage beatmaps efficiently.
@@ -32,16 +36,13 @@ It was originally created by <GithubUser username="ohaui" />, and later picked u
 
 ```mermaid
 graph TD;
-    subgraph Sunrise["Sunrise Ecosystem"]
+    subgraph SolarSystem["Solar System"]
         direction TB;
         SunriseCore["Sunrise (Server)"];
         Sunset["Sunset (Web Interface)"];
         Observatory["Observatory (Beatmap Manager)"];
         Sunshine["Sunshine (Discord Bot)"];
-    end
-
-    subgraph Compass["Compass (Documentation)"]
-        CompassDocs["Compass Docs"];
+        CompassDocs["Compass (Documentation)"];
     end
 
     SunriseCore --> Observatory;
