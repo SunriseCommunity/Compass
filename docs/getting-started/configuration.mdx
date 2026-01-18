@@ -182,21 +182,56 @@ Find the backup snapshot you want to apply, it should be named like `Backup_YYYY
 
 Inside the backup snapshot, you will find a file named `backup_mysql_YYYYMMDDHHMMSS.sql`. This is the database backup file.
 
-Use any MySQL client to apply the backup to the database, clear the database first by running the following command:
+Get the docker container ID of the database container by running the following command:
+```console
+docker ps --no-trunc --format "{{.ID}} {{.Names}} {{.Ports}}"
+```
+
+And look for the database container, it should be named like ` osu-sunrise-mysql-sunrise-db-1`
+
+```console
+de72eaebe131634413be592186f7b5bab3a2b8970ca521394b9a57e77aa9aaa5 osu-sunrise-mysql-sunrise-db-1 33060/tcp, 0.0.0.0:3306->3306/tcp
+```
+Copy the first part of the container ID, in this case `de72eaebe131634413be592186f7b5bab3a2b8970ca521394b9a57e77aa9aaa5`
+
+Then run the following command to apply clear all tables before applying the backup:
+
+:::tip 
+Fill the `<container_id>`, `<root username>`, `<root password>` and `<database_name>` with the actual values.
+
+Usually, the root username is `root` and the root password is `root`.
+:::
+
 ```sql
-$  mysql -p -u <username> -h <host> -P <port> <database_name>
+$ docker exec -it <container_id> mysql -u <root username> --password=<root password> <database_name>
 DROP DATABASE IF EXISTS <database_name>;
 CREATE DATABASE <database_name>;
 ```
 
+The output should be like this:
+```console
+mysql> DROP DATABASE IF EXISTS sunrise;
+Query OK, 19 rows affected (0.354 sec)
+
+mysql> CREATE DATABASE sunrise;
+Query OK, 1 row affected (0.009 sec)
+
+mysql> exit
+Bye
+```
+
 Then apply the backup by running the following command:
 ```sql
-$ mysql -p -u <username> -h <host> -P <port> <database_name> < backup_mysql_YYYYMMDDHHMMSS.sql
+$ cat backup_mysql_YYYYMMDDHHMMSS.sql | docker exec -i <container_id> mysql -u <root username> --password=<root password> <database_name>
 ```
 
 After that, don't forget to move `Data` files from backup snapshot to the `Data` directory. 
 
 Now, you can start the server again.
+
+:::warning
+Please also don't forget to rebuild global leaderboards, by running `!flushcache yes_i_understand_what_im_doing` command to the server's bot[^1] as a superuser.
+:::
 
 ## Web Interface (Sunset) w/ Admin Panel
 
