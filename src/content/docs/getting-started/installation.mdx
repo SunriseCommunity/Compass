@@ -72,7 +72,7 @@ Fill in the required parameters in both files.
 If you are on Windows and don't have `cp`, you can just copy/rename the files in File Explorer.
 :::
 
-:::warning
+:::caution
 Make sure to edit `WEB_DOMAIN=` in `.env` to your actual domain that you plan to host on (for local setups, `sunrise.local` is a common choice).
 :::
 
@@ -167,7 +167,7 @@ To make your server accessible on the internet:
    sudo caddy start --envfile .env
    ```
    
-:::warning
+:::caution
 After starting Caddy, make sure to visit `grafana.*` subdomain and change the default password for the admin account!
 
 On the first login, use `admin` as the username and `admin` as the password. After that you will be prompted to change the password.

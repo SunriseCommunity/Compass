@@ -9,7 +9,7 @@ sidebar:
 
 This section will help you set up Sunrise server on your local environment.
 
-:::warning
+:::caution
 This installation guide was in use before the [Solar System](https://github.com/SunriseCommunity/Solar-System) was introduced. **It is now deprecated and not recommended for production use.**
 
 
@@ -86,7 +86,7 @@ Add the following line to the `hosts` file:
 127.0.0.1 b.sunrise.local
 ```
 
-:::warning
+:::caution
 Don't forget to save the file after editing it.
 :::
 
@@ -272,7 +272,7 @@ If you have cloned the Sunset repository, we will briefly cover how to run it.
 
 First, make sure you have created the `.env.local` file as a copy of the `.env.local.example` file in the `/Sunset` directory and filled it with your values.
 
-:::warning
+:::caution
 Make sure to set the `NEXT_PUBLIC_SERVER_DOMAIN` to `sunrise.local` to match the server domain you set in the Sunrise configuration.
 And don't forget to add `NODE_TLS_REJECT_UNAUTHORIZED=0` to disable SSL verification for the local development environment.
 :::

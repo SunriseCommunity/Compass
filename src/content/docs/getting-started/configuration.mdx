@@ -160,7 +160,7 @@ SUNRISE_DEMOTE_SUPERUSER_ON_STARTUP_USE_THIS_IF_SOMEONE_STOLEN_YOUR_SUPERUSER_AC
 
 After that, restart the server, and you should again see the superuser message in the console.
 
-:::warning
+:::caution
 Don't forget to remove the line from the `.env` file after you have received superuser privileges again.
 :::
 
@@ -188,7 +188,7 @@ To do so, firstly enable `Add visitor location headers` in the Cloudflare rules 
 
 ![Cloudflare GeoIP](../../../assets/img/cloudflare-geo.png)
 
-:::warning
+:::caution
 Make sure you also have `IP Geolocation` enabled in the Cloudflare network settings.
 
 ![Cloudflare IP Geolocation](../../../assets/img/cloudflare-ip-geo.png)
@@ -214,7 +214,7 @@ This will back up the database to the `Database/Backups` directory.
 
 #### Applying database backup
 
-:::warning
+:::caution
 Please stop the server before applying a database backup.
 :::
 
@@ -269,7 +269,7 @@ After that, don't forget to move `Data` files from backup snapshot to the `Data`
 
 Now, you can start the server again.
 
-:::warning
+:::caution
 Please also don't forget to rebuild global leaderboards, by running `!flushcache yes_i_understand_what_im_doing` command to the server's bot[^1] as a superuser.
 :::
 
@@ -305,7 +305,7 @@ And from here you can manage your server and view player statistics.
 
 #### Beatmap Management
 
-:::warning
+:::caution
 You will need `Bat` privileges to manage beatmaps.
 :::
 
