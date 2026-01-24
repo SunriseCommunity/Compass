@@ -1,14 +1,14 @@
 ---
-sidebar_position: 1
+title: What is 'Sunrise'?
+sidebar:
+  order: 1
 ---
-
-# What is 'Sunrise'?
 
 So, here you are, decided to host your own osu! server, and you stumbled upon Sunrise.
 
 You might be wondering, what is Sunrise? Is it just another "[bancho.py](https://github.com/osuAkatsuki/bancho.py) powered" server? What makes it different?
 
-![Is this a bancho.py?](/img/is-this-a-bancho-py-fork.png)
+![Is this a bancho.py?](../../../assets/img/is-this-a-bancho-py-fork.png)
 
 In short - **No, it is not a bancho.py fork.**
 
@@ -72,14 +72,13 @@ If you more interested in the technical details of how the server works, check o
 Now, let's get started with setting up the server and exploring its features!
 
 export const GithubUser = ({ username }) => (
-  <span className="whitespace-nowrap rounded overflow-hidden">
+  <span style={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap", overflow: "hidden" }}>
     <img
       alt="richardscull's avatar"
       src={`https://github.com/${username}.png?size=32`}
-      class="rounded-full mr-1 align-middle"
-      style={{ width: "1em", height: "1em" }}
+      style={{ width: "1em", height: "1em", borderRadius: "9999px", marginRight: "0.25em", verticalAlign: "middle" }}
     />
-    <a href={`https://github.com/${username}`} className="text-sm align-middle">
+    <a href={`https://github.com/${username}`} style={{ fontSize: "0.875rem", lineHeight: "1.25rem", verticalAlign: "middle"  }}>
       {username}
     </a>
   </span>

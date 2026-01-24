@@ -1,8 +1,11 @@
 ---
-sidebar_position: 1
+title: Installation - Without Orchestrator
+sidebar:
+   order: 1
+   badge:
+      text: Deprecated
+      variant: caution
 ---
-
-# Installation - Without Orchestrator
 
 This section will help you set up Sunrise server on your local environment.
 
@@ -100,7 +103,7 @@ We recommend using [Devglan's Self-Signed Certificate Generator](https://www.dev
 - **Signing Algorithm**: `SHA256`
 - **Key Size**: `4096 bit`
 
-![Online Config](/img/ssl-online.png)
+![Online Config](../../../assets/img/ssl-online.png)
 
 After generating the certificate, click "Download All" button to download the certificate and private key.
 
@@ -250,7 +253,7 @@ This will start the server and all the components in detached mode.
 :::tip
 Your final docker setup should look like this:
 
-![](/img/docker.png)
+![](../../../assets/img/docker.png)
 :::
 
 After which you should be able to test connection to the server using `https://cho.sunrise.local` url in your browser. You should see the face of a beatuful mister.

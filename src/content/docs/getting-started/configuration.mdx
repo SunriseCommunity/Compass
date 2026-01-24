@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
+title: Configuration
+sidebar:
+   order: 3
 ---
-
-# Configuration
 
 This section will cover basic configuration of the server.
 
@@ -33,7 +33,7 @@ Open the `Sunset/app/i18n.config.json` file and update the following values:
 2. Upload your logo image (PNG, JPG, SVG, etc.) and click the "Generate" button.
 3. Click `Next` at the bottom of the page.
 4. Select `Next.js` and download app and public files.
-![Favicon Generator](/img/favicon-gen.png)
+![Favicon Generator](../../../assets/img/favicon-gen.png)
 5. Replace files in the `Sunset/app` and `Sunset/public` directories with the downloaded files following the website instructions.
 
 ##### Change server's assets
@@ -143,7 +143,7 @@ Run the following command to Server Bot:
 
 Now, you should be able to access the admin panel by clicking your profile icon in the top right corner, and selecting `Admin panel` from the dropdown menu.
 
-![Admin Panel](/img/admin-button.png)
+![Admin Panel](../../../assets/img/admin-button.png)
 
 ### How to reset superuser?
 
@@ -180,12 +180,12 @@ By default, the server is using free GeoIP API endpoint which is heavily rate li
 
 To do so, firstly enable `Add visitor location headers` in the Cloudflare rules settings.
 
-![Cloudflare GeoIP](/img/cloudflare-geo.png)
+![Cloudflare GeoIP](../../../assets/img/cloudflare-geo.png)
 
 :::warning
 Make sure you also have `IP Geolocation` enabled in the Cloudflare network settings.
 
-![Cloudflare IP Geolocation](/img/cloudflare-ip-geo.png)
+![Cloudflare IP Geolocation](../../../assets/img/cloudflare-ip-geo.png)
 :::
 
 Then, add the following line to the `.env` file:
@@ -293,7 +293,7 @@ Login as your administrator user, if you don't have one, please follow the [How 
 
 Click on your profile icon in the top right corner, and select `Admin panel` from the dropdown menu.
 
-![Admin Panel](/img/admin-button.png)
+![Admin Panel](../../../assets/img/admin-button.png)
 
 And from here you can manage your server and view player statistics.
 
@@ -305,7 +305,7 @@ You will need `Bat` privileges to manage beatmaps.
 
 You can open any beatmap by clicking on its name in the list. This will open a page with detailed information about the beatmap, including its metadata, difficulty, and more.
 
-![Beatmap Management](/img/beatmap-ranking.png)
+![Beatmap Management](../../../assets/img/beatmap-ranking.png)
 
 You can select multiple beatmaps and update their status in bulk. This is useful for approving or rejecting multiple beatmaps at once. Furthermore, you can also return their original status by clicking the arrow button next to the status dropdown.
 
@@ -319,7 +319,7 @@ You can also search for a specific user by their username or ID.
 
 Select a user by clicking on their name in the list.
 
-![User Management](/img/user-management.png)
+![User Management](../../../assets/img/user-management.png)
 
 From here you can manage their privileges, restrict their access, etc.
 
@@ -335,11 +335,11 @@ BANCHO_CLIENT_SECRET=your_client_secret
 
 You can get the credentials by registering your application on the [osu! API](https://osu.ppy.sh/home/account/edit).
 
-![1](/img/bancho-1.png)
+![1](../../../assets/img/bancho-1.png)
 
-![2](/img/bancho-2.png)
+![2](../../../assets/img/bancho-2.png)
 
-![3](/img/bancho-3.png)
+![3](../../../assets/img/bancho-3.png)
 
 After that, don't forget to restart the stack.
 
@@ -366,6 +366,8 @@ SUNSHINE_BEATMAPS_STATUSES_CHANNED_ID=your_channel_id
 
 If you see missing emojis in the bot embedded messages, you need to upload them using Discord Developer Portal and change `Sunshine/config/prod.json` file with new emoji IDs.
 
-<iframe width="675" height="380" src="https://www.youtube.com/embed/usQglXdAzbA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="video-wrapper">
+  <iframe src="https://www.youtube.com/embed/usQglXdAzbA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 [^1]: Server Bot is the always online bot account that is used to interact with the server. Similar to the [`Tillerino`](https://osu.ppy.sh/users/2070907) on Bancho. Please don't confuse it with the `BanchoBot`.

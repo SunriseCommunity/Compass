@@ -1,0 +1,45 @@
+/* Dark mode colors. */
+:root {
+    --sl-color: #000000;
+	--sl-color-accent-low: #3a1a02;
+	--sl-color-accent: #a15100;
+	--sl-color-accent-high: #e9bfa3;
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #efedea;
+	--sl-color-gray-2: #cac8c4;
+	--sl-color-gray-3: #a8a39b;
+	--sl-color-gray-4: #5b5850;
+	--sl-color-gray-5: #3b3831;
+	--sl-color-gray-6: #2a2620;
+	--sl-color-black: #1a1815;
+}
+/* Light mode colors. */
+:root[data-theme='light'] {
+    --sl-color: #000000;
+	--sl-color-accent-low: #f0d0bb;
+	--sl-color-accent: #813f00;
+	--sl-color-accent-high: #502500;
+	--sl-color-white: #1a1815;
+	--sl-color-gray-1: #2a2620;
+	--sl-color-gray-2: #3b3831;
+	--sl-color-gray-3: #5b5850;
+	--sl-color-gray-4: #8f8b83;
+	--sl-color-gray-5: #c4c2bd;
+	--sl-color-gray-6: #efedea;
+	--sl-color-gray-7: #f7f6f4;
+	--sl-color-black: #ffffff;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
