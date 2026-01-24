@@ -4,6 +4,8 @@ sidebar:
    order: 4
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 This section will cover some of the most common questions about Sunrise, its features, and some troubleshooting tips.
 
 ## How do I set up the server?
@@ -148,19 +150,21 @@ This will update all components to the latest version.
 
 To update the server, you can follow these steps for all components you wish to update:
 
+<Steps>
 1. Stop the server if it's running.
 2. Pull the latest changes from the GitHub repository.
 
-```bash
-git fetch
-git pull
-```
+   ```bash
+   git fetch
+   git pull
+   ```
 
 3. Rebuild the component using the docker compose command:
 
-```bash
-docker compose -f docker-compose.yml up -d --build --force-recreate
-```
+   ```bash
+   docker compose -f docker-compose.yml up -d --build --force-recreate
+   ```
+</Steps>
 
 This should update all components to the latest version.
 

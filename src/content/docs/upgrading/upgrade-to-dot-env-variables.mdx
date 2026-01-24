@@ -4,6 +4,8 @@ sidebar:
    order: 2
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 ## Introduction
 
 Starting from January 6 2026, Sunrise has transitioned to using `.env` files for configuration management.
@@ -24,50 +26,54 @@ This is not a requirement, but it is highly recommended to back up your existing
 To do so, run `!backupdatabase` Bancho command in-game to back up your database. After it's done, continue with this guide.
 :::
 
+<Steps>
+
 1. **Stop the Server**: Ensure that your Sunrise server is not running before making any changes.
 
-If you are running the server using Docker Compose:
+   If you are running the server using Docker Compose:
 
-```bash
-docker compose -f docker-compose.yml down
-```
+   ```bash
+   docker compose -f docker-compose.yml down
+   ```
 
-Or manually stop the server if you are running it directly.
+   Or manually stop the server if you are running it directly.
 
 2. **Create a `.env` File**: In the root directory of your Sunrise server, there should be a file named `.env.example`. Create a copy of this file and rename it to `.env`.
 
-On Linux or macOS, you can use the following command:
+   On Linux or macOS, you can use the following command:
 
-```bash
-cp .env.example .env
-```
+   ```bash
+   cp .env.example .env
+   ```
 
-On Windows, you can use:
+   On Windows, you can use:
 
-```powershell
-copy .env.example .env
-```
+   ```powershell
+   copy .env.example .env
+   ```
 
 3. **Migrate Configuration Values**: Open your existing `appsettings.*.json` files and copy the relevant configuration values to the corresponding variables in the `.env` file.
 
-Here is an example mapping of the values from `appsettings.json` to `.env` variables:
+   Here is an example mapping of the values from `appsettings.json` to `.env` variables:
 
-![](../../../assets/img/values-mapping-for-env.png)
-:::warning
-Please notice that `Hangfire.ConnectionString` is _deprecated_ and doesn't need to be migrated to `.env` file any more. Use the same connection string as `Database.ConnectionString` instead.
-:::
+   ![](../../../assets/img/values-mapping-for-env.png)
+   :::warning
+   Please notice that `Hangfire.ConnectionString` is _deprecated_ and doesn't need to be migrated to `.env` file any more. Use the same connection string as `Database.ConnectionString` instead.
+   :::
 
 4. **Save Changes**: After migrating all the necessary values, save the `.env` file.
 
 5. **Restart the Server**: Start your Sunrise server again to apply the changes.
 
-If you are using Docker Compose:
+   If you are using Docker Compose:
 
-```bash
-docker compose -f docker-compose.yml up -d --build --remove-orphans
-```
+   ```bash
+   docker compose -f docker-compose.yml up -d --build --remove-orphans
+   ```
+   
+   Or start the server manually if you are running it directly.
 
-Or start the server manually if you are running it directly.
+</Steps>
 
 ## Common problems
 

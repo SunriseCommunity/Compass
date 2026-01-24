@@ -4,6 +4,8 @@ sidebar:
    order: 2
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 ![Migration to Solar System from Manual Install](../../../assets/img/prefer_solar_system.png)
 
 ## Introduction
@@ -25,28 +27,31 @@ Make sure to create a backup of the Sunrise using `!backupdatabase` command in-g
 We are not responsible for any data loss or corruption that may occur during the migration. Please make sure to create backups of all databases before proceeding with the migration.
 :::
 
+<Steps>
+
 1. **Stop the Server**: Ensure that Sunrise/Observatory/Sunshine containers are not running before making any changes. (Leave databases containers running.)
 
 2. **Clone the Solar System repository**: Clone the [Solar System](https://github.com/SunriseCommunity/Solar-System) repository with submodules.
 
-```console
-git clone --recursive https://github.com/SunriseCommunity/Solar-System.git
-cd Solar-System
-```
+   ```console
+   git clone --recursive https://github.com/SunriseCommunity/Solar-System.git
+   cd Solar-System
+   ```
 
 3. **Copy the configuration files**: Copy the configuration files from your manual installation to the Solar System repository.
 
-```console
-cp .env.example .env
-cp Sunrise.Config.Production.json.example Sunrise.Config.Production.json
-```
+   ```console
+   cp .env.example .env
+   cp Sunrise.Config.Production.json.example Sunrise.Config.Production.json
+   ```
 
 4. **Fill the configuration files**: Fill the configuration files with your previous configuration values. 
 
-For example, if you were using `appsettings.Production.json` file, you can copy the values from it to the `Sunrise.Config.Production.json` file.
+   For example, if you were using `appsettings.Production.json` file, you can copy the values from it to the `Sunrise.Config.Production.json` file.
+   
+   For the `.env` file, each value has a prefix of the component it belongs to. For example, `SUNRISE_` prefix is for Sunrise, `OBSERVATORY_` prefix is for Observatory, `SUNSHINE_` prefix is for Sunshine.
 
-For the `.env` file, each value has a prefix of the component it belongs to. For example, `SUNRISE_` prefix is for Sunrise, `OBSERVATORY_` prefix is for Observatory, `SUNSHINE_` prefix is for Sunshine.
-
+</Steps>
 
 ### Migrating data from sunrise database
 

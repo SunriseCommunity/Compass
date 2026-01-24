@@ -4,6 +4,8 @@ sidebar:
    order: 3
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 This section will cover basic configuration of the server.
 
 ## General Configuration
@@ -28,13 +30,15 @@ Open the `Sunset/app/i18n.config.json` file and update the following values:
 
 ##### Change server's logo
 
+<Steps>
 1. Use any favicon generator, use [any search engine](https://www.google.com/search?q=create+favicon+for+website) to find one.
-- For simplicity, we will use [realfavicongenerator.net]( https://realfavicongenerator.net/) in this guide.
+    - For simplicity, we will use [realfavicongenerator.net]( https://realfavicongenerator.net/) in this guide.
 2. Upload your logo image (PNG, JPG, SVG, etc.) and click the "Generate" button.
 3. Click `Next` at the bottom of the page.
 4. Select `Next.js` and download app and public files.
-![Favicon Generator](../../../assets/img/favicon-gen.png)
+  ![Favicon Generator](../../../assets/img/favicon-gen.png)
 5. Replace files in the `Sunset/app` and `Sunset/public` directories with the downloaded files following the website instructions.
+</Steps>
 
 ##### Change server's assets
 
@@ -44,12 +48,14 @@ For example, to change the front page mascot image, you can replace `Sunset/publ
 
 ##### Change the website's colors
 
+<Steps>
 1. Use any Tailwind v3 ShadCN UI theme generator, use [any search engine](https://www.google.com/search?q=tailwind+css+v3+shadcn+cn+ui+theme+generator) to find one.
-- For simplicity, we will use [tweakcn.com](https://tweakcn.com/) in this guide.
+    - For simplicity, we will use [tweakcn.com](https://tweakcn.com/) in this guide.
 2. Select or manually customize the theme you want.
 3. Click on the `Code` tab and select `Tailwind v3` and `hsl` options.
 4. Press the `Copy` button to copy the code.
 5. Open the `Sunset/app/style.css` file and replace the content with the copied code.
+</Steps>
 
 #### Sunrise (osu! server) changes
 
@@ -335,11 +341,18 @@ BANCHO_CLIENT_SECRET=your_client_secret
 
 You can get the credentials by registering your application on the [osu! API](https://osu.ppy.sh/home/account/edit).
 
-![1](../../../assets/img/bancho-1.png)
+<Steps>
+1. Go to the [osu! API](https://osu.ppy.sh/home/account/edit) page and find the `OAuth` section.
+  ![1](../../../assets/img/bancho-1.png)
 
-![2](../../../assets/img/bancho-2.png)
+2. Click on the `New OAuth Application` button or press `Edit` if you already have an application created.
+  ![2](../../../assets/img/bancho-2.png)
+    -  If you are creating a new application, fill the `Application Name` and `Application Callback URLs` fields with any value, as they are not used by the server.
 
-![3](../../../assets/img/bancho-3.png)
+3. Copy the `Client ID` and `Client Secret` values.
+  ![3](../../../assets/img/bancho-3.png)
+</Steps>
+
 
 After that, don't forget to restart the stack.
 
