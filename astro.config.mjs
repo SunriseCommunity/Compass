@@ -2,7 +2,10 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import mermaid from 'astro-mermaid';
-import starlightThemeRapide from 'starlight-theme-rapide'
+import starlightThemeRapide from 'starlight-theme-rapide';
+import starlightImageZoom from 'starlight-image-zoom';
+import starlightScrollToTop from 'starlight-scroll-to-top';
+
 
 // https://astro.build/config
 export default defineConfig({
@@ -50,7 +53,8 @@ export default defineConfig({
 					autogenerate: { directory: 'deprecated' },					
 				},
 			],
-			plugins: [starlightThemeRapide()],
+			description: 'Documentation for the Sunrise osu! server project, including setup guides and configuration options.',
+			plugins: [starlightThemeRapide(), starlightImageZoom(), starlightScrollToTop()],
 			customCss: [
 				'./src/styles/custom.css'
 			],

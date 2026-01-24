@@ -8,6 +8,9 @@ sidebar:
       variant: caution
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+
 This section will cover enhanced configuration of the server, which were previously not possible with the admin panel.
 
 ## Update your own privileges (Using direct database change)
@@ -16,6 +19,7 @@ Before we can access the admin panel, we need to update our own privileges. This
 
 For the sake of simplicity, we will use the [DBeaver](https://dbeaver.io/) database management tool, but you can use any other tool that supports MySQL databases.
 
+<Steps>
 1. Open DBeaver.
 2. Connect to your database following the instructions below
    :::note
@@ -29,22 +33,23 @@ For the sake of simplicity, we will use the [DBeaver](https://dbeaver.io/) datab
 
 3. Open the `Database/sunrise/user` table.
 4. Find your user in the list, and double-click on it's `Privilege` value.
-5. Update it using the following table:
+5. Update it to the new value depending on the privileges you want to have. For example, to have admin privileges, set it to `8`.
+   <Aside title="Privilege Levels and how to calculate them">
+   To calculate the privilege level, you should sum the values of the privileges you want to grant.
 
-:::note Privilege Levels and how to calculate them
-To calculate the privilege level, you should sum the values of the privileges you want to grant.
+   Current privileges are:
 
-Current privileges are:
+   - `0` - User
+   - `1` - Supporter
+   - `2` - Bat (Beatmap Approval Team)
+   - `8` - Administrator
+   - `16` - Developer
+   - `512` - Super User (Can use server maintenance commands)
 
-- `0` - User
-- `1` - Supporter
-- `2` - Bat (Beatmap Approval Team)
-- `8` - Administrator
-- `16` - Developer
-- `512` - Super User (Can use server maintenance commands)
+   For example, if you want to grant Bat and Administrator privileges, you would sum `2` (Bat) and `8` (Administrator), resulting in `10`.
 
-For example, if you want to grant Bat and Administrator privileges, you would sum `2` (Bat) and `8` (Administrator), resulting in `10`.
-:::
+   </Aside>
 
 6. Click on the `Apply cell changes` button (or press `Ctrl + S`).
 7. Changes will be applied during a minute or so, and you will be able to access the admin panel.
+</Steps>
