@@ -19,7 +19,19 @@ export default defineConfig({
 			tableOfContents: {
 				maxHeadingLevel: 4,
 			},
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/SunriseCommunity/Compass' }],
+			social: [
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/SunriseCommunity/Compass' }, 
+				{
+					icon: 'discord',
+					label: 'Discord',
+					href: 'https://discord.sunrize.uk',
+				},
+				{
+					icon: 'rocket',
+					label: 'Server Instance',
+					href: 'https://sunrize.uk',
+				}
+			],
 			sidebar: [
 				{
 					label: 'Getting started',
