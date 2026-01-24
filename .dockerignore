@@ -1,0 +1,5 @@
+.DS_Store
+.astro
+.github
+node_modules
+dist

@@ -1,10 +1,10 @@
 services:
-  compass-docs-docusaurus:
+  compass-docs-starlight:
     build:
       context: .
-      target: serve
+      no_cache: true
     ports:
-      - "3099:3000"
+      - "3099:8080"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
