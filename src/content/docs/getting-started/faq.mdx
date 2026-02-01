@@ -113,7 +113,9 @@ You can check the server bot's[^1] commands by running the following command in 
 You can change beatmap statuses eligability for hyping by modifying the `BeatmapHype.ExcludedHypeStatuses` array in the sunrise config file as follows:
 
 :::note
-By default, the server excludes Ranked, Approved, Qualified and Loved beatmaps from being hyped.
+By default, the server excludes Ranked, Approved, Qualified, Loved, Wip, and Pending statuses from being hyped.
+
+Wip and Pending statuses are excluded to prevent hype not finished beamtmaps that are still in development.
 
 This field is also not included in the config file by default, so you may need to add it manually.
 :::
