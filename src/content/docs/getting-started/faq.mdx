@@ -108,6 +108,32 @@ You can check the server bot's[^1] commands by running the following command in 
 !help
 ```
 
+## How to make some beatmap statuses eligable/ineligable for hyping?
+
+You can change beatmap statuses eligability for hyping by modifying the `BeatmapHype.ExcludedHypeStatuses` array in the sunrise config file as follows:
+
+:::note
+By default, the server excludes Ranked, Approved, Qualified and Loved beatmaps from being hyped.
+
+This field is also not included in the config file by default, so you may need to add it manually.
+:::
+
+```json
+{
+...
+"BeatmapHype": {
+	...
+    "ExcludedHypeStatuses": [
+      "Ranked",
+      "Approved",
+      "Qualified",
+      "Loved"
+    ]
+}
+```
+
+Valid statuses are: `Graveyard`, `Wip`, `Pending`, `Ranked`, `Approved`, `Qualified`, `Loved`.
+
 ## I get errors about sending requests a little too fast in the game, what should I do?
 
 Firstly, make sure you are set up the same `IGNORE_RATELIMIT_KEY` (Observatory) and `ObservatoryApiKey` (Sunrise) if you are not using Solar System orchestrator.
