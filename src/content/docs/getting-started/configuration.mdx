@@ -356,6 +356,24 @@ You can get the credentials by registering your application on the [osu! API](ht
 
 After that, don't forget to restart the stack.
 
+### Removing some beatmap mirrors from the pool.
+
+By default, the server is configured to pull beatmaps from Bancho (if api credentials are provided), [Mino](https://catboy.best/), [osu.direct](https://osu.direct/home) and other mirrors. 
+
+If you want to remove some mirrors from the pool, you can edit the `.env` file as follows:
+```env
+# Optional: If you need to disable one of the mirrors from usage, enters it's short name here.
+# Options: 'mino' | 'bancho' | 'direct' | 'gatari' | 'nerinyan' | 'osulabs';
+OBSERVATORY_MIRRORS_TO_IGNORE="osulabs,bancho" 
+```
+
+In this example, the server will ignore osulabs (canary mino instance) and Bancho mirrors when pulling beatmaps data.
+
+:::tip
+If possible, please avoid removing Bancho mirror from the pool, as it is the most reliable and has the most complete data.
+:::
+
+
 ## Sunshine (Discord bot)
 
 ### Adding Discord bot credentials
