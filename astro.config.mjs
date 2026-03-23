@@ -5,7 +5,7 @@ import mermaid from 'astro-mermaid';
 import starlightThemeRapide from 'starlight-theme-rapide';
 import starlightImageZoom from 'starlight-image-zoom';
 import starlightScrollToTop from 'starlight-scroll-to-top';
-
+import starlightLinksValidator from 'starlight-links-validator';
 
 // https://astro.build/config
 export default defineConfig({
@@ -54,7 +54,7 @@ export default defineConfig({
 				},
 			],
 			description: 'Documentation for the Sunrise osu! server project, including setup guides and configuration options.',
-			plugins: [starlightThemeRapide(), starlightImageZoom(), starlightScrollToTop()],
+			plugins: [starlightLinksValidator(), starlightThemeRapide(), starlightImageZoom(), starlightScrollToTop(), ],
 			customCss: [
 				'./src/styles/custom.css'
 			],
