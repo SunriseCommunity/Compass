@@ -6,6 +6,7 @@ FROM base AS prod
 WORKDIR /app
 COPY . /app
 RUN bun install --frozen-lockfile
+ENV BASE_URL=/ 
 RUN bun run build
 
 FROM nginxinc/nginx-unprivileged:alpine AS serve
