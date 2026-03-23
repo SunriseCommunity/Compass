@@ -10,6 +10,11 @@ import starlightLinksValidator from 'starlight-links-validator';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://docs.sunrize.uk',
+	redirects: {
+		// These are for legacy links for history reasons.
+		'/getting-started/faq': '/docs/faq',
+		'/getting-started/configuration': '/docs/configuration',
+	},
 	integrations: [
 		starlight({
 			favicon: '/favicon.svg',
@@ -39,6 +44,10 @@ export default defineConfig({
 				{
 					label: 'Getting started',
 					autogenerate: { directory: 'getting-started' },
+				},
+				{
+					label: 'Docs',
+					autogenerate: { directory: 'docs' },
 				},
 				{
 					label: 'Upgrading',
