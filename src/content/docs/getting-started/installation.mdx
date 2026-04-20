@@ -1,30 +1,30 @@
 ---
 title: Installation - Production Setup
 sidebar:
-   order: 2
+  order: 2
 ---
 
 This section will help you set up Sunrise server on your local environment.
 
-We are going to set up "Production" ready environment, for this we are going to use [Solar System Orchestrator](https://github.com/SunriseCommunity/Solar-System). 
+We are going to set up "Production" ready environment, for this we are going to use [Solar System Orchestrator](https://github.com/SunriseCommunity/Solar-System).
 
 Solar System is an orchestration tool that simplifies the deployment and management of Sunrise and its related components using Docker. It provides easy setup and configuration for server administrators with versioning support.
 
 If you are more interested in development setup, please refer to the [Contributing](/contributing) section.
 
 :::tip
-👀 We recommend watching the **[installation video guide](https://youtu.be/ukVc4anmtIs?si=ElITsNDIXw6ijxGP)** for a step-by-step walkthrough. 
+👀 We recommend watching the **[installation video guide](https://youtu.be/ukVc4anmtIs?si=ElITsNDIXw6ijxGP)** for a step-by-step walkthrough.
 
 <div class="video-wrapper">
   <iframe
     src="https://www.youtube.com/embed/ukVc4anmtIs"
     frameborder="0"
     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
+    allowfullscreen
+  ></iframe>
 </div>
 
-From it you will learn how to set up Solar-System and how to customize it for your branding. 
+From it you will learn how to set up Solar-System and how to customize it for your branding.
 :::
 
 ## Prerequisites
@@ -85,6 +85,7 @@ You can customize the configuration files to match your requirements. For exampl
   ...
 }
 ```
+
 :::
 
 ### 3. Generate API keys
@@ -110,12 +111,28 @@ You may be prompted to run multiple scripts during setup. If you are using **Win
 :::
 
 :::note
-If you want Sunrise to use the Bancho API **(highly recommended)**, fill `OBSERVATORY_BANCHO_CLIENT_ID` and `OBSERVATORY_BANCHO_CLIENT_SECRET` in `.env`. 
+If you want Sunrise to use the Bancho API **(highly recommended)**, fill `OBSERVATORY_BANCHO_CLIENT_ID` and `OBSERVATORY_BANCHO_CLIENT_SECRET` in `.env`.
 
 If you don't know how to get these values, follow the instructions in the [FAQ](/docs/faq#where-can-i-get-bancho_client_id-and-bancho_client_secret) section.
 :::
 
 ### 4. Running the Server
+
+:::caution
+You are going to start your server for the first time, make sure to double-check your configuration files before proceeding to avoid any issues later on.
+
+Additionally check that you have firewall (ufw for Linux) rules set up to allow incoming traffic for **and only** ports 22/80/443 (for Caddy).
+
+As we are using Docker, it is known issue that it can interfere with existing firewall rules. We recommend setting up ufw-docker to manage this. You can find the instructions in the [ufw-docker repository](https://github.com/chaifeng/ufw-docker#install).
+
+**We are not responsible for any misconfigurations that can lead to security issues and will not provide support for such issues, so please be careful and double-check everything before starting the server.**
+
+![](../../../assets/img/safety-firewall.webp)
+
+The best way to confirm that everything is set up correctly is to test that you can't connect to the database ports (3306 for MySQL, 6379 for Redis) from outside the server.
+
+You can use online port checkers for this or try to connect using `telnet <your IP> 3306` and `telnet <your IP> 6379` from another machine. The connection should be refused.
+:::
 
 Now that we have everything set up, we can run the server.
 
@@ -141,39 +158,39 @@ docker ps
 To make your server accessible on the internet:
 
 ### 1. Configure DNS records
-   
-   Make sure you have DNS records pointing the following subdomains to your server's IP address:
-   
-   - `*` (wildcard)
-   - `api`
-   - `osu`
-   - `a`
-   - `c`
-   - `assets`
-   - `cho`
-   - `c4`
-   - `b`
-   - `grafana`
-   
-   These subdomains are required for the server to function properly.
+
+Make sure you have DNS records pointing the following subdomains to your server's IP address:
+
+- `*` (wildcard)
+- `api`
+- `osu`
+- `a`
+- `c`
+- `assets`
+- `cho`
+- `c4`
+- `b`
+- `grafana`
+
+These subdomains are required for the server to function properly.
 
 ### 2. Start Caddy reverse proxy
-   
-   For simplicity, we use Caddy as a reverse proxy. By default, the `Caddyfile` is configured to host the website, server, and Grafana. You can uncomment additional configurations in the `Caddyfile` if needed.
 
-   Start Caddy by running in the `Solar-System` directory:
-   
-   ```console
-   sudo caddy start --envfile .env
-   ```
-   
+For simplicity, we use Caddy as a reverse proxy. By default, the `Caddyfile` is configured to host the website, server, and Grafana. You can uncomment additional configurations in the `Caddyfile` if needed.
+
+Start Caddy by running in the `Solar-System` directory:
+
+```console
+sudo caddy start --envfile .env
+```
+
 :::caution
 After starting Caddy, make sure to visit `grafana.*` subdomain and change the default password for the admin account!
 
 On the first login, use `admin` as the username and `admin` as the password. After that you will be prompted to change the password.
 :::
 
-Now, you should be able to test connection to the server using `https://cho.<your WEB_DOMAIN>` in your browser. 
+Now, you should be able to test connection to the server using `https://cho.<your WEB_DOMAIN>` in your browser.
 
 ![peppy shown on cho domain](../../../assets/img/peppy-cho.png)
 
@@ -192,7 +209,6 @@ For example:
 ```
 
 After that, you can launch the osu! client and should be able to connect to the server.
-
 
 ![](../../../assets/img/how-to-connect.png)
 
@@ -217,6 +233,7 @@ Now that you have the server up and running, you can start exploring its feature
 Please follow the [Configuration](/docs/configuration) section to learn how to manage the server.
 
 You will learn how to:
+
 - Update website branding (logo, colors, etc.)
 - Recieve admin privileges
 - Manage beatmaps (rank, love, derank beatmaps, etc.)
