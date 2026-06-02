@@ -1,7 +1,7 @@
 ---
 title: Installation - Local Setup
 sidebar:
-   order: 3
+  order: 3
 ---
 
 This guide walks you through setting up Sunrise server **locally** on your machine using [Solar System](https://github.com/SunriseCommunity/Solar-System) with self-signed certificates. This is useful for testing, development, or running a private server that doesn't need to be accessible from the internet.
@@ -16,7 +16,7 @@ Before you start, make sure you have the following installed on your machine:
 - [Git](https://git-scm.com/): For cloning the repositories.
 - [Text Editor](https://notepad-plus-plus.org/): Optional, but recommended. Any text editor will work.
 - [Administrator Privileges](https://www.howtogeek.com/343287/how-to-run-command-prompt-as-an-administrator-in-windows-10/): Required for editing the `hosts` file and installing certificates.
-- [OpenSSL](https://www.openssl.org/) *(optional)*: Only needed if you want to generate certificates via the command line instead of using an online tool.
+- [OpenSSL](https://www.openssl.org/) _(optional)_: Only needed if you want to generate certificates via the command line instead of using an online tool.
 
 Docker will do the heavy lifting for you, so you don't need to worry about installing any technologies like Redis, MySQL, Grafana, etc.
 
@@ -95,12 +95,12 @@ You can use [SSL Trust PFX File Generator](https://www.ssltrust.com.au/ssl-tools
 Remember the password you set when generating the PFX file. You will need it later for the `SUNRISE_KESTREL_CERTIFICATES_DEFAULT_PASSWORD` variable in `.env`.
 :::
 
-Rename the generated PFX file to `certificate.pfx` and move it to the `Sunrise/` directory inside Solar System:
+Rename the generated PFX file to `sunrise.pfx` and move it to the `Sunrise/` directory inside Solar System:
 
 ```bash title="Final placement"
 Solar-System/
 ├── Sunrise/
-│   ├── certificate.pfx    <-- Place it here
+│   ├── sunrise.pfx    <-- Place it here
 │   └── ...
 ├── docker-compose.local.yml
 └── ...
@@ -131,19 +131,19 @@ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
 Convert it to PKCS12 format (PFX) for ASP.NET:
 
 ```console
-openssl pkcs12 -export -out certificate.pfx -inkey sunrise.local.key -in sunrise.local.crt -password pass:password
+openssl pkcs12 -export -out sunrise.pfx -inkey sunrise.local.key -in sunrise.local.crt -password pass:password
 ```
 
 :::note
 If you use `-password pass:password`, the PFX password is literally `password`. Use whatever value you prefer, just make sure it matches what you set in `.env` later.
 :::
 
-Move `certificate.pfx` to the `Sunrise/` directory:
+Move `sunrise.pfx` to the `Sunrise/` directory:
 
 ```bash title="Final placement"
 Solar-System/
 ├── Sunrise/
-│   ├── certificate.pfx    <-- Place it here
+│   ├── sunrise.pfx    <-- Place it here
 │   └── ...
 ├── docker-compose.local.yml
 └── ...
@@ -198,6 +198,7 @@ You can customize the configuration files to match your requirements. For exampl
   ...
 }
 ```
+
 :::
 
 ### 5. Generate API Keys
@@ -221,7 +222,7 @@ If you are using **Windows**, use the `.bat` equivalent scripts located in the s
 :::
 
 :::note
-If you want Sunrise to use the Bancho API **(highly recommended)**, fill `OBSERVATORY_BANCHO_CLIENT_ID` and `OBSERVATORY_BANCHO_CLIENT_SECRET` in `.env`. 
+If you want Sunrise to use the Bancho API **(highly recommended)**, fill `OBSERVATORY_BANCHO_CLIENT_ID` and `OBSERVATORY_BANCHO_CLIENT_SECRET` in `.env`.
 
 If you don't know how to get these values, follow the instructions in the [FAQ](/docs/faq#where-can-i-get-bancho_client_id-and-bancho_client_secret) section.
 :::
@@ -291,10 +292,10 @@ On the first login, use `admin` as both the username and password. You will be p
 
 Solar System provides `.local` script variants for all common operations:
 
-| Action | Linux / macOS | Windows |
-|--------|--------------|---------|
-| **Start** | `./start.local.sh` | `.\start.local.bat` |
-| **Stop** | `./stop.local.sh` | `.\stop.local.bat` |
+| Action     | Linux / macOS       | Windows              |
+| ---------- | ------------------- | -------------------- |
+| **Start**  | `./start.local.sh`  | `.\start.local.bat`  |
+| **Stop**   | `./stop.local.sh`   | `.\stop.local.bat`   |
 | **Update** | `./update.local.sh` | `.\update.local.bat` |
 
 These scripts always target `docker-compose.local.yml`, so you don't need to specify the compose file manually.
@@ -305,7 +306,7 @@ If you encounter any issues during the setup process, check the following:
 
 - Make sure your `hosts` file entries are correct and saved.
 - Verify the certificate is installed in the Trusted Root store.
-- Ensure `SUNRISE_KESTREL_CERTIFICATES_DEFAULT_PASSWORD` in `.env` matches the password used when generating `certificate.pfx`.
+- Ensure `SUNRISE_KESTREL_CERTIFICATES_DEFAULT_PASSWORD` in `.env` matches the password used when generating `sunrise.pfx`.
 - Check the logs of the Docker containers for errors:
   ```console
   docker logs <container-name>
